@@ -55,7 +55,8 @@
 
     <indy.version>2.5.5</indy.version>
     <keycloak.version>13.0.0</keycloak.version>
-    <pnc.version>2.0.3</pnc.version>
+    <jsonevent-layout.version>1.7</jsonevent-layout.version>
+    <pnc.version>2.1.0-SNAPSHOT</pnc.version>
     <surefire-plugin.version>2.22.2</surefire-plugin.version>
     <quarkus.version>1.13.4.Final</quarkus.version>
     <resteasy.version>3.6.1.Final</resteasy.version>
@@ -70,6 +71,21 @@
         <version>${quarkus.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-logging-kafka</artifactId>
+        <version>${quarkus.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-logging-kafka-deployment</artifactId>
+        <version>${quarkus.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>net.logstash.log4j</groupId>
+          <artifactId>jsonevent-layout</artifactId>
+          <version>${jsonevent-layout.version}</version>
       </dependency>
 
       <dependency>
@@ -125,6 +141,10 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-swagger-ui</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-logging-kafka</artifactId>
+    </dependency>
     <!-- Quarkus dependencies END !-->
 
     <dependency>
@@ -155,6 +175,10 @@
     <!-- PNC dependencies END !-->
 
     <!-- Other dependencies !-->
+    <dependency>
+      <groupId>net.logstash.log4j</groupId>
+      <artifactId>jsonevent-layout</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.commonjava.indy</groupId>
       <artifactId>indy-client-core-java</artifactId>
@@ -244,7 +268,7 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-    
+
     <repository>
       <id>Nexus Staging</id>
       <url>https://oss.sonatype.org/content/groups/staging</url>
