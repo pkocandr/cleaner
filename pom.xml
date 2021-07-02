@@ -62,7 +62,7 @@
 
     <jsonevent-layout.version>1.7</jsonevent-layout.version>
     <surefire-plugin.version>2.22.2</surefire-plugin.version>
-    <quarkus.version>1.13.7.Final</quarkus.version>
+    <quarkus.version>2.0.0.Final</quarkus.version>
     <resteasy.version>3.6.1.Final</resteasy.version>
     <tagSuffix />
   </properties>
