@@ -148,8 +148,7 @@ public class FailedBuildsCleaner {
                     .withMaxConnections(1)
                     .build();
 
-            IndyClientModule[] modules = new IndyClientModule[] {
-                    new IndyFoloAdminClientModule(),
+            IndyClientModule[] modules = new IndyClientModule[] { new IndyFoloAdminClientModule(),
                     new IndyFoloContentClientModule() };
 
             Map<String, String> mdcCopyMappings = new HashMap<>(); // TODO fill in these if needed
@@ -259,9 +258,18 @@ public class FailedBuildsCleaner {
                             + "temporary builds cleaner before failed builds cleaner got to it. Cleaning...",
                     groupName);
             clean = true;
-        } else if (failedStatuses.contains(build.getStatus()) && build.getEndTime().isBefore(session.getTo())) {
-            logger.debug("Build record for group {} is older than the limit. Cleaning...", groupName);
-            clean = true;
+        } else if (build.getEndTime().isBefore(session.getTo())) {
+            if (failedStatuses.contains(build.getStatus())) {
+                logger.debug("Build record for group {} is older than the limit. Cleaning...", groupName);
+                clean = true;
+            } else {
+                logger.debug(
+                        "Build record's status for group {} is {}, which is not one of statuses to be cleaned.",
+                        groupName,
+                        build.getStatus());
+            }
+        } else {
+            logger.debug("Build record for group {} is younger than the limit. Skipping.", groupName);
         }
         return clean;
     }
@@ -324,11 +332,11 @@ public class FailedBuildsCleaner {
                     }
                 } else {
                     errCounter.increment();
-                    logger.error("Unable ot parse buildContentId=%s", buildContentId);
+                    logger.error("Unable to parse buildContentId \"{}\"", buildContentId);
                     return null;
                 }
             } else {
-                logger.debug("Build with buildContentId = {} found.");
+                logger.debug("Build with buildContentId = {} found.", buildContentId);
                 return builds.iterator().next();
             }
         } catch (RemoteResourceException e) {
